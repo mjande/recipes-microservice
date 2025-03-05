@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS recipes CASCADE;
 CREATE TABLE recipes (
     id SERIAL PRIMARY KEY,
-    user_email TEXT NOT NULL,
+    -- user_email TEXT NOT NULL,
     name TEXT NOT NULL,
     cooking_time TEXT,
     description TEXT,
