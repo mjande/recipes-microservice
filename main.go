@@ -8,6 +8,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
+	"github.com/go-chi/jwtauth/v5"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/mjande/recipes-microservice/database"
 	"github.com/mjande/recipes-microservice/handlers"
@@ -26,11 +27,17 @@ func main() {
 
 	// Middleware
 	router.Use(cors.Handler(cors.Options{
-		AllowedOrigins: []string{os.Getenv("CLIENT_URL")},
-		AllowedMethods: []string{"GET", "POST", "PATCH", "DELETE"},
+		AllowedOrigins:   []string{os.Getenv("CLIENT_URL")},
+		AllowedMethods:   []string{"GET", "POST", "PATCH", "DELETE"},
+		AllowedHeaders:   []string{"Authorization", "Content-Type"},
+		AllowCredentials: true,
 	}))
 
 	router.Use(middleware.Logger)
+
+	tokenAuth := jwtauth.New("HS256", []byte(os.Getenv("SECRET_KEY")), nil)
+
+	router.Use(jwtauth.Verifier(tokenAuth))
 
 	// Routes
 	router.Route("/ingredients", func(r chi.Router) {

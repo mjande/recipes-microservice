@@ -5,6 +5,7 @@ import (
 
 	"github.com/jackc/pgx"
 	"github.com/mjande/recipes-microservice/database"
+	"github.com/mjande/recipes-microservice/utils"
 )
 
 type Recipe struct {
@@ -15,22 +16,25 @@ type Recipe struct {
 	Instructions string       `json:"instructions"`
 	Ingredients  []Ingredient `json:"ingredients"`
 	Tags         []string     `json:"tags"`
+	UserID       int64        `json:"userId"`
 }
 
 // Queries the database for all recipes (while only loading basic
 // data for index page)
 func ListRecipes(ctx context.Context) ([]Recipe, error) {
-	query := `SELECT id, name, cooking_time, description FROM recipes`
+	userId := utils.ExtractUserIDFromContext(ctx)
+
+	query := `SELECT id, name, cooking_time, description FROM recipes WHERE user_id = $1`
 
 	// Execute query
-	rows, err := database.DB.Query(ctx, query)
+	rows, err := database.DB.Query(ctx, query, userId)
 	if err != nil {
 		return []Recipe{}, err
 	}
 	defer rows.Close()
 
 	// Map database response onto recipes slice
-	var recipes []Recipe
+	recipes := []Recipe{}
 	for rows.Next() {
 		var recipe Recipe
 
@@ -118,10 +122,11 @@ func FindRecipe(ctx context.Context, id int64) (Recipe, error) {
 }
 
 func CreateRecipe(ctx context.Context, recipe Recipe) (int64, error) {
-	query := `INSERT INTO recipes (name, cooking_time, description, instructions) VALUES ($1, $2, $3, $4) RETURNING id`
+	userId := utils.ExtractUserIDFromContext(ctx)
+	query := `INSERT INTO recipes (name, user_id, cooking_time, description, instructions) VALUES ($1, $2, $3, $4, $5) RETURNING id`
 
 	// Send query
-	row := database.DB.QueryRow(ctx, query, recipe.Name, recipe.CookingTime, recipe.Description, recipe.Instructions)
+	row := database.DB.QueryRow(ctx, query, recipe.Name, userId, recipe.CookingTime, recipe.Description, recipe.Instructions)
 
 	// Get id of created recipe
 	var id int64
