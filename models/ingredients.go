@@ -19,10 +19,11 @@ type Ingredient struct {
 
 // Queries the database for all unique ingredients used in any recipe.
 func ListIngredients(ctx context.Context) ([]string, error) {
-	query := `SELECT name FROM ingredients`
+	userId := utils.ExtractUserIDFromContext(ctx)
+	query := `SELECT name FROM ingredients WHERE user_id = $1`
 
 	// Execute query
-	rows, err := database.DB.Query(ctx, query)
+	rows, err := database.DB.Query(ctx, query, userId)
 	if err != nil {
 		return []string{}, err
 	}
