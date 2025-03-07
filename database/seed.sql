@@ -27,39 +27,39 @@ INSERT INTO recipes (name, user_id, description, cooking_time, instructions) VAL
 
 DELETE FROM ingredients;
 -- Garlic Parmesan Chicken
-INSERT INTO ingredients (name, recipe_id, quantity, unit) VALUES
-('chicken breast', 1, 2, 'pcs'),    
-('garlic', 1, 3, 'cloves'),  
-('olive oil', 1, 2, 'tbsp'),     
-('parmesan cheese', 1, 0.5, 'cup');
+INSERT INTO ingredients (name, user_id, recipe_id, quantity, unit) VALUES
+('chicken breast', 1, 1, 2, 'pcs'),    
+('garlic', 1, 1, 3, 'cloves'),  
+('olive oil', 1, 1, 2, 'tbsp'),     
+('parmesan cheese', 1, 1, 0.5, 'cup');
 
 -- Spaghetti with Tomato Basil Sauce
-INSERT INTO ingredients (name, recipe_id, quantity, unit) VALUES
-('spaghetti', 2, 200, 'grams'),
-('tomatoes', 2, 3, 'pcs'), 
-('basil', 2, 5, 'leaves'),  
-('olive oil', 2, 1, 'tbsp'),  
-('garlic', 2, 1, 'clove'); 
+INSERT INTO ingredients (name, user_id, recipe_id, quantity, unit) VALUES
+('spaghetti', 1, 2, 200, 'grams'),
+('tomatoes', 1, 2, 3, 'pcs'), 
+('basil', 1, 2, 5, 'leaves'),  
+('olive oil', 1, 2, 1, 'tbsp'),  
+('garlic', 1, 2, 1, 'clove'); 
 
 -- Chocolate Chip Pancakes
-INSERT INTO ingredients (name, recipe_id, quantity, unit) VALUES
-('flour', 3, 1.5, 'cups'),   
-('sugar', 3, 0.25, 'cup'),
-('eggs', 3, 2, 'pcs'),      
-('milk', 3, 1, 'cup'),  
-('butter', 3, 2, 'tbsp'),      
-('salt', 3, 0.5, 'tsp');    
+INSERT INTO ingredients (name, user_id, recipe_id, quantity, unit) VALUES
+('flour', 1, 3, 1.5, 'cups'),   
+('sugar', 1, 3, 0.25, 'cup'),
+('eggs', 1, 3, 2, 'pcs'),      
+('milk', 1, 3, 1, 'cup'),  
+('butter', 1, 3, 2, 'tbsp'),      
+('salt', 1, 3, 0.5, 'tsp');    
 
-INSERT INTO ingredients (name, recipe_id, quantity, unit) VALUES
-('chicken breast', 4, 2, 'piece'),         
-('zucchini', 4, 3, 'piece'),        
-('basil', 4, 1, 'cup'),             
-('garlic', 4, 2, 'clove'),     
-('pine nuts', 4, 0.25, 'cup'),  
-('parmesan cheese', 4, 0.5, 'cup'),      
-('olive oil', 4, 3, 'tbsp'),      
-('salt', 4, 0.5, 'tsp'),
-('pepper', 4, 0.25, 'tsp');  
+INSERT INTO ingredients (name, user_id, recipe_id, quantity, unit) VALUES
+('chicken breast', 1, 4, 2, 'piece'),         
+('zucchini', 1, 4, 3, 'piece'),        
+('basil', 1, 4, 1, 'cup'),             
+('garlic', 1, 4, 2, 'clove'),     
+('pine nuts', 1, 4, 0.25, 'cup'),  
+('parmesan cheese', 1, 4, 0.5, 'cup'),      
+('olive oil', 1, 4, 3, 'tbsp'),      
+('salt', 1, 4, 0.5, 'tsp'),
+('pepper', 1, 4, 0.25, 'tsp');  
 
 INSERT INTO recipe_tags (recipe_id, name) VALUES 
 (2, 'vegetarian'),

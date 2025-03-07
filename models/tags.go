@@ -3,7 +3,7 @@ package models
 import (
 	"context"
 
-	"github.com/jackc/pgx"
+	"github.com/jackc/pgx/v5"
 	"github.com/mjande/recipes-microservice/database"
 )
 

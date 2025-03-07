@@ -2,8 +2,9 @@ package models
 
 import (
 	"context"
+	"fmt"
 
-	"github.com/jackc/pgx"
+	"github.com/jackc/pgx/v5"
 	"github.com/mjande/recipes-microservice/database"
 	"github.com/mjande/recipes-microservice/utils"
 )
@@ -216,6 +217,7 @@ func updateRecipeIngredients(ctx context.Context, recipeId int64, recipe Recipe)
 				return err
 			}
 		} else if err != nil {
+			fmt.Println("HERE")
 			return err
 		} else {
 			// Update previous version of ingredient

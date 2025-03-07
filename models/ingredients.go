@@ -3,13 +3,14 @@ package models
 import (
 	"context"
 
-	"github.com/jackc/pgx"
+	"github.com/jackc/pgx/v5"
 	"github.com/mjande/recipes-microservice/database"
+	"github.com/mjande/recipes-microservice/utils"
 )
 
 type Ingredient struct {
-	ID int64 `json:"id"`
-	// User     string  `json:"user"`
+	ID       int64   `json:"id"`
+	UserId   string  `json:"userId"`
 	Name     string  `json:"name"`
 	RecipeID int64   `json:"recipeId"`
 	Quantity float32 `json:"quantity"`
@@ -103,9 +104,10 @@ func FindIngredient(ctx context.Context, name string, recipeId int64) (Ingredien
 
 // Creates a new ingredient in the database
 func CreateIngredient(ctx context.Context, ingredient Ingredient) (int64, error) {
-	query := `INSERT INTO ingredients (name, recipe_id, quantity, unit) VALUES ($1, $2, $3, $4) RETURNING id`
+	userId := utils.ExtractUserIDFromContext(ctx)
+	query := `INSERT INTO ingredients (name, user_id, recipe_id, quantity, unit) VALUES ($1, $2, $3, $4, $5) RETURNING id`
 
-	row := database.DB.QueryRow(ctx, query, ingredient.Name, ingredient.RecipeID, ingredient.Quantity, ingredient.Unit)
+	row := database.DB.QueryRow(ctx, query, ingredient.Name, userId, ingredient.RecipeID, ingredient.Quantity, ingredient.Unit)
 
 	var id int64
 	err := row.Scan(&id)
