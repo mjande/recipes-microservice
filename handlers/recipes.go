@@ -106,8 +106,8 @@ func PostRecipe(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 	err = json.NewEncoder(w).Encode(responseData)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
 		log.Println(err)
+		utils.SendErrorResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 }
