@@ -86,6 +86,21 @@ func ListIngredientsByRecipe(ctx context.Context, recipeId int64) ([]Ingredient,
 	return ingredients, nil
 }
 
+// Queries all ingredients for any recipe in given ID list
+func ListIngredientsByMultipleRecipes(ctx context.Context, recipeIds []int64) ([]Ingredient, error) {
+	var ingredients []Ingredient
+	for _, recipeId := range recipeIds {
+		recipeIngredients, err := ListIngredientsByRecipe(ctx, recipeId)
+		if err != nil {
+			return ingredients, err
+		}
+
+		ingredients = append(ingredients, recipeIngredients...)
+	}
+
+	return ingredients, nil
+}
+
 // Queries a single ingredient by its name and recipe id.
 func FindIngredient(ctx context.Context, name string, recipeId int64) (Ingredient, error) {
 	query := `SELECT id, name, recipe_id, quantity, unit FROM ingredients WHERE name = $1 AND recipe_id = $2`

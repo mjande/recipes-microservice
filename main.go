@@ -42,6 +42,7 @@ func main() {
 	// Routes
 	router.Route("/ingredients", func(r chi.Router) {
 		r.Get("/", handlers.GetIngredients)
+		r.Post("/", handlers.GetIngredientsByMultipleRecipes)
 	})
 
 	router.Route("/recipes", func(r chi.Router) {
